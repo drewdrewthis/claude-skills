@@ -2,7 +2,11 @@
   "name": "review",
   "version": "1.0.0",
   "description": "Parallel code review with 4 specialized agents: Uncle Bob (SOLID/TDD), Dan North (CUPID), Test Architect (pyramid/quality), and Security (PII/secrets).",
+  "repository": "https://github.com/drewdrewthis/claude-skills",
+  "license": "MIT",
+  "keywords": ["code-review", "SOLID", "CUPID", "security", "testing"],
   "author": {
-    "name": "Drew"
+    "name": "drewdrewthis",
+    "url": "https://github.com/drewdrewthis"
   }
 }

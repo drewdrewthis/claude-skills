@@ -1,7 +1,8 @@
 {
   "name": "drew-skills",
   "owner": {
-    "name": "Drew"
+    "name": "drewdrewthis",
+    "url": "https://github.com/drewdrewthis"
   },
   "metadata": {
     "description": "Personal Claude Code skills and plugins",
@@ -14,7 +15,8 @@
       "description": "Debate a design question with N agents arguing different positions, then synthesize a recommendation.",
       "version": "1.0.0",
       "author": {
-        "name": "Drew"
+        "name": "drewdrewthis",
+        "url": "https://github.com/drewdrewthis"
       }
     },
     {
@@ -23,7 +25,8 @@
       "description": "Parallel code review with 4 specialized agents: Uncle Bob (SOLID/TDD), Dan North (CUPID), Test Architect (pyramid/quality), and Security (PII/secrets). Includes bundled coding standards and testing philosophy docs.",
       "version": "1.0.0",
       "author": {
-        "name": "Drew"
+        "name": "drewdrewthis",
+        "url": "https://github.com/drewdrewthis"
       }
     }
   ]
