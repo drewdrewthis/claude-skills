@@ -36,12 +36,7 @@ Read the full diff to understand the changes deeply — the PR body must reflect
 
 ### 3. Read the PR template
 
-Look for `.github/PULL_REQUEST_TEMPLATE.md` in the repo root. If missing, use:
-```
-## Why
-## What changed
-## Test plan
-```
+Look for `.github/PULL_REQUEST_TEMPLATE.md` in the repo root. If missing, read the bundled template at `docs/PR_TEMPLATE.md` (relative to this skill's directory).
 
 ### 4. Fill the template
 
