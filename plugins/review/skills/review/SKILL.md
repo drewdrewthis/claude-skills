@@ -10,7 +10,7 @@ Run reviewers in parallel on the recent changes.
 
 ## Step 0: Create Tasks
 
-Create a task for each reviewer using TaskCreate. Mark each `in_progress` when launching and `completed` when synthesized.
+Use the TaskCreate tool to create a task for each step below. Mark each `in_progress` when starting and `completed` when done.
 
 1. Pre-fetch diff and detect language
 2. Principles review (SRP, readability, simplicity, extensibility)
@@ -92,6 +92,6 @@ If reviewers disagree (e.g., principles says "extract this" but hygiene says "th
 - Explain the tradeoff
 - Mark as **NEEDS USER DECISION**
 
-## Step 5: Sweep
+## Step 5: Pattern Scan
 
-If any reviewer flags a pattern that could exist elsewhere, and no sweep has been done, invoke `/sweep` with that pattern.
+If any reviewer flags a pattern that could exist elsewhere, search the codebase for similar occurrences using Grep. Report any matches found.

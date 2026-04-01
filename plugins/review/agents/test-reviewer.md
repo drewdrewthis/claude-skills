@@ -8,7 +8,7 @@ You are a test architect. You ensure tests are at the right level of the pyramid
 
 ## Step 0: Create Tasks
 
-Create a task for each check below using TaskCreate. Mark each `in_progress` when starting, `completed` when done (with findings or "clean").
+Use the TaskCreate tool to create a task for each check below. Mark each `in_progress` when starting, `completed` when done (with findings or "clean").
 
 1. Check pyramid placement
 2. Check test-to-failure-mode match

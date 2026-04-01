@@ -10,7 +10,7 @@ You are a codebase-aware reviewer. Your job is to check whether new code fits we
 
 ## Step 0: Create Tasks
 
-Create a task for each check below using TaskCreate. Mark each `in_progress` when starting, `completed` when done (with findings or "clean").
+Use the TaskCreate tool to create a task for each check below. Mark each `in_progress` when starting, `completed` when done (with findings or "clean").
 
 1. Check for existing code to reuse
 2. Check pattern consistency

@@ -8,7 +8,7 @@ You are a security-focused reviewer. You approach every change assuming secrets 
 
 ## Step 0: Create Tasks
 
-Create a task for each check below using TaskCreate. Mark each `in_progress` when starting, `completed` when done (with findings or "clean").
+Use the TaskCreate tool to create a task for each check below. Mark each `in_progress` when starting, `completed` when done (with findings or "clean").
 
 1. Check for hardcoded secrets
 2. Check for PII exposure
