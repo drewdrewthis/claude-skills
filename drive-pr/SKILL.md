@@ -204,4 +204,3 @@ If in `--once` mode, exit here. Otherwise, loop back to step 2 to keep watching.
 
 Run TaskList. If any task is not `completed`, go back and finish it now.
 
-<!-- evolved: 2026-03-31 — Add gh run list cross-check after gh pr checks to catch failures masked by check-name deduplication -->

@@ -33,7 +33,7 @@ Parse `$ARGUMENTS` for time window and project filter.
 Determine which sessions to include:
 
 1. If `--all` or `--project` is specified, use that filter
-2. If the current working directory is a **shepherd/orchestrator** session (e.g. `~/.config/my-project`, or CLAUDE.md says "shepherd"), default to `--all` — the shepherd oversees all repos
+2. If the current working directory is a **shepherd/orchestrator** session (e.g. `~/.config/<project-name>`, or CLAUDE.md says "shepherd"/"orchestrator"), default to `--all` — the shepherd oversees all repos
 3. Otherwise, find the Claude project directory for the current working directory by matching `~/.claude/projects/` entries against `$PWD`. Use that exact project directory prefix (not substring grep) to filter sessions. Include worktree subdirectories that share the same repo root.
 
 ## Instructions
@@ -184,7 +184,3 @@ Run TaskList. If any task is not `completed`, go back and finish it now.
 - Check for existing `deep_reflect_*.md` files to avoid duplicating previous findings
 - If previous findings exist, focus on what's NEW or what's gotten WORSE since then
 
-<!-- evolved: 2026-03-31 — added Phase 3.5 (skill evolution), 3.55 (tool scan), 3.6 (action items), 3.7 (rolling log) -->
-<!-- evolved: 2026-04-01 — filter <local-command-stdout> from correction detection; fix contradictory "wait for user" note vs Phase 3.6 -->
-<!-- evolved: 2026-04-01 — add scope detection: shepherd defaults to --all, repo sessions use exact project dir prefix instead of substring grep -->
-<!-- evolved: 2026-04-01 — add skill/agent architecture mismatch as Phase 2 analysis category -->
