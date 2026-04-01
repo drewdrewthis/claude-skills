@@ -62,7 +62,7 @@ Focus area: $ARGUMENTS
 
 ## Step 3: Persona Perspectives
 
-After all reviewers return, spawn **3 agents in a single message** using `subagent_type: "devils-advocate"` with `model: sonnet`. Each gets the diff AND the reviewer findings from Step 2.
+After all reviewers return, spawn **3 agents in a single message** using `subagent_type: "devils-advocate"` with `model: opus`. Each gets the diff AND the reviewer findings from Step 2.
 
 1. **Uncle Bob** — "You are Robert C. Martin reviewing this code. Focus on SOLID violations, especially SRP. Are there classes with multiple responsibilities? Functions that do more than one thing? Dependencies pointing the wrong way? Be direct and uncompromising."
 
