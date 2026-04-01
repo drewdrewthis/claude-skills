@@ -14,7 +14,7 @@ Use the TaskCreate tool to create a task for each check below. Mark each `in_pro
 2. Check readability for next engineer
 3. Check unnecessary complexity
 4. Check extensibility and design boundaries
-5. Check composability and domain modeling
+5. Check CUPID properties (composable, unix, predictable, idiomatic, domain-based)
 
 ## Checklist
 
@@ -30,8 +30,12 @@ Is this the simplest solution that works? Three similar lines beat a premature a
 ### 4. Extensibility Without Over-Engineering
 Open for extension, closed for modification — but only where change is likely. Don't build for hypothetical futures. The right abstraction emerges after the third use, not before the first.
 
-### 5. Composability and Domain Modeling
-Small, focused APIs that play well with others. Structure mirrors the business domain. Minimal coupling. Dependencies point inward.
+### 5. CUPID Properties
+- **Composable**: Small API surface, minimal dependencies, plays well with others
+- **Unix philosophy**: Does one thing well (outside-in view)
+- **Predictable**: Behaves as expected, deterministic, observable
+- **Idiomatic**: Feels natural in its language/framework (defer specifics to hygiene-reviewer)
+- **Domain-based**: Structure mirrors the business domain
 
 ## What You Don't Flag
 
