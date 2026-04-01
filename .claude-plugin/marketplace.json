@@ -16,6 +16,15 @@
       "author": {
         "name": "Drew"
       }
+    },
+    {
+      "name": "review",
+      "source": "./plugins/review",
+      "description": "Parallel code review with 4 specialized agents: Uncle Bob (SOLID/TDD), Dan North (CUPID), Test Architect (pyramid/quality), and Security (PII/secrets). Includes bundled coding standards and testing philosophy docs.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Drew"
+      }
     }
   ]
 }

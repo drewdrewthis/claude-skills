@@ -1,0 +1,8 @@
+{
+  "name": "review",
+  "version": "1.0.0",
+  "description": "Parallel code review with 4 specialized agents: Uncle Bob (SOLID/TDD), Dan North (CUPID), Test Architect (pyramid/quality), and Security (PII/secrets).",
+  "author": {
+    "name": "Drew"
+  }
+}
