@@ -53,10 +53,13 @@ Only output sections with findings. If clean, say "No issues found."
 
 ### Naming / Structure
 - [file:line] Current → Suggested fix
+
+### Follow-Up Issues (out of scope)
+- [description of test work needed, where in codebase]
 ```
 
-Skip empty sections.
+Skip empty sections. No praise.
 
 ## Scope
 
-Review only in-scope changes.
+Review only in-scope changes. Out-of-scope test concerns go in the Follow-Up Issues section.

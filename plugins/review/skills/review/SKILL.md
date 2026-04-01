@@ -76,31 +76,30 @@ Each persona should give a **brief, opinionated take** (3-5 bullet points max). 
 
 After all agents return (checklist reviewers + personas):
 
+**Only include concerns — no praise, no "what's working well."** If a section has no findings, omit it entirely.
+
 ```
 ## Review Summary
 
-### Design (Principles)
-[Key findings on SRP, readability, extensibility]
+### Must Fix
+[Blocking issues from any reviewer — file:line, what's wrong, concrete fix]
 
-### Codebase Fit (Hygiene)
-[Key findings on reuse, patterns, idioms, dead code]
-
-### Tests
-[Key findings — or "Skipped: no test-relevant changes" if test-reviewer wasn't spawned]
-
-### Security
-[Key findings on PII/secrets]
+### Should Improve
+[Non-blocking concerns from any reviewer — file:line, suggestion]
 
 ### Persona Perspectives
-**Uncle Bob**: [sharp take on SOLID]
-**Metz & Beck**: [sharp take on simplicity/abstraction/communication]
-**Fowler**: [sharp take on refactoring signals/code smells]
+[Only include personas that flagged something. Skip if all clean.]
+**Uncle Bob**: [concern]
+**Metz & Beck**: [concern]
+**Fowler**: [concern]
 
 ### Conflicts Requiring Decision
-[Any tensions between reviewers or personas — these need human input]
+[Tensions between reviewers or personas — state positions, mark NEEDS USER DECISION]
 
-### Agreed Improvements
-[Recommendations multiple reviewers support]
+### Follow-Up Issues
+[Out-of-scope work reviewers identified — each item should become a GitHub issue]
+- [ ] [description of work needed] — flagged by [reviewer]
+- [ ] [description of work needed] — flagged by [reviewer]
 ```
 
 ## Step 5: Surface Conflicts

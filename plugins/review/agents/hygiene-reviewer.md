@@ -51,10 +51,13 @@ Is the area around the change cleaner than before? Stale TODOs, leftover debug l
 
 ### Cleanup Opportunities
 - [file:line] While here, this could be tidied
+
+### Follow-Up Issues (out of scope)
+- [description of work needed, where in codebase]
 ```
 
-Be specific. Point to existing code. Skip sections with no findings.
+**No praise.** Only concerns and follow-ups. Skip sections with no findings. Point to existing code.
 
 ## Scope
 
-Review only in-scope changes. For out-of-scope cleanup: note briefly, recommend an issue.
+Review only in-scope changes. Out-of-scope problems go in the Follow-Up Issues section — don't fix them, just flag them.

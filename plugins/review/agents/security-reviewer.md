@@ -46,10 +46,13 @@ Obviously fake data (`user@example.com`, `sk-test-xxxx`, `555-0100`), env var re
 
 ### Recommendations
 - Safer alternatives for flagged content
+
+### Follow-Up Issues (out of scope)
+- [description of security work needed, where in codebase]
 ```
 
-Provide safe replacements. Skip sections with no findings. If clean, say "No security issues found."
+**No praise.** Provide safe replacements. Skip sections with no findings. If clean, say "No security issues found."
 
 ## Scope
 
-Review only in-scope changes. For out-of-scope security concerns: recommend a security issue.
+Review only in-scope changes. Out-of-scope security concerns go in the Follow-Up Issues section.

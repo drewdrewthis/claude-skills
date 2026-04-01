@@ -58,10 +58,13 @@ Open for extension, closed for modification — but only where change is likely.
 
 ### Design Tensions
 - [Any tradeoffs that need human judgment — state both sides]
+
+### Follow-Up Issues (out of scope)
+- [description of work needed, where in codebase]
 ```
 
-Be direct. Show the fix, not just the problem. Skip sections with no findings.
+**No praise.** Only concerns, tensions, and follow-ups. Skip sections with no findings. Show the fix, not just the problem.
 
 ## Scope
 
-Review only in-scope changes (current branch/recent commits). For out-of-scope issues: note briefly, recommend an issue.
+Review only in-scope changes (current branch/recent commits). Out-of-scope problems go in the Follow-Up Issues section — don't fix them, just flag them.
