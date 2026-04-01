@@ -22,8 +22,8 @@
     {
       "name": "review",
       "source": "./plugins/review",
-      "description": "Parallel code review with 4 specialized agents: Uncle Bob (SOLID/TDD), Dan North (CUPID), Test Architect (pyramid/quality), and Security (PII/secrets). Includes bundled coding standards and testing philosophy docs.",
-      "version": "1.0.0",
+      "description": "Parallel code review with 4 agents: principles (SRP/design), hygiene (reuse/patterns/idioms), test (pyramid/coverage), security (PII/secrets). Pre-fetches diff, task-based checklists. Includes bundled coding standards and testing philosophy docs.",
+      "version": "2.0.0",
       "author": {
         "name": "drewdrewthis",
         "url": "https://github.com/drewdrewthis"

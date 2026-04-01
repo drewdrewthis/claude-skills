@@ -1,10 +1,10 @@
 {
   "name": "review",
-  "version": "1.0.0",
-  "description": "Parallel code review with 4 specialized agents: Uncle Bob (SOLID/TDD), Dan North (CUPID), Test Architect (pyramid/quality), and Security (PII/secrets).",
+  "version": "2.0.0",
+  "description": "Parallel code review with 4 agents: principles (SRP/design/readability), hygiene (reuse/patterns/idioms/dead code), test (pyramid/coverage), and security (PII/secrets). Orchestrator pre-fetches diff once, agents use task checklists.",
   "repository": "https://github.com/drewdrewthis/claude-skills",
   "license": "MIT",
-  "keywords": ["code-review", "SOLID", "CUPID", "security", "testing"],
+  "keywords": ["code-review", "SOLID", "CUPID", "SRP", "security", "testing", "hygiene", "idioms"],
   "author": {
     "name": "drewdrewthis",
     "url": "https://github.com/drewdrewthis"

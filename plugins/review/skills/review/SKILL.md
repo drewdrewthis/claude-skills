@@ -1,61 +1,97 @@
 ---
 name: review
-description: "Run parallel code reviews: uncle-bob-reviewer (SOLID/TDD), cupid-reviewer (CUPID properties), test-reviewer (pyramid placement), and pii-reviewer (security/secrets). Surfaces conflicts for orchestrator resolution."
+description: "Run parallel code reviews: principles-reviewer (SRP/design), hygiene-reviewer (reuse/patterns/idioms), test-reviewer (pyramid/coverage), and security-reviewer (PII/secrets). Surfaces conflicts for human decision."
 context: fork
 user-invocable: true
 argument-hint: "[focus-area or file-path]"
 ---
 
-Run all four reviewers in parallel on the recent changes.
+Run reviewers in parallel on the recent changes.
 
-## Step 1: Parallel Reviews
+## Step 0: Create Tasks
 
-Spawn ALL agents simultaneously using the **Agent tool** in a single message. Each agent MUST be a dedicated subagent — do NOT simulate their output yourself:
+Create a task for each reviewer using TaskCreate. Mark each `in_progress` when launching and `completed` when synthesized.
 
-1. **uncle-bob-reviewer** (`subagent_type: "uncle-bob-reviewer"`): SOLID scan, TDD interrogation, clean code inspection
-2. **cupid-reviewer** (`subagent_type: "cupid-reviewer"`): CUPID properties assessment (Composable, Unix, Predictable, Idiomatic, Domain-based)
-3. **test-reviewer** (`subagent_type: "test-reviewer"`): Test pyramid placement, spec validation, naming conventions, flakiness vectors
-4. **pii-reviewer** (`subagent_type: "pii-reviewer"`): PII exposure, hardcoded secrets, sensitive data in tests/logs
+1. Pre-fetch diff and detect language
+2. Principles review (SRP, readability, simplicity, extensibility)
+3. Hygiene review (reuse, patterns, idioms, dead code, bloat)
+4. Security review (PII, secrets, data exposure)
+5. Test review (pyramid, coverage, naming) — conditional
+6. Synthesize and surface conflicts
 
-**IMPORTANT:** You MUST use `subagent_type` to invoke the actual agent definitions (`.claude/agents/*.md`). These agents have specific instructions and decision trees that you don't have. Do NOT role-play as the reviewers — delegate to them.
+## Step 1: Pre-fetch context
+
+Fetch the diff once. All agents receive it — no agent should fetch independently.
+
+```bash
+# Detect default branch
+DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef -q .defaultBranchRef.name 2>/dev/null || echo "main")
+
+# Get the diff
+DIFF=$(git diff "origin/$DEFAULT_BRANCH"...HEAD)
+
+# Detect primary language
+LANG=$(git diff "origin/$DEFAULT_BRANCH"...HEAD --stat | grep -oE '\.\w+$' | sort | uniq -c | sort -rn | head -1 | awk '{print $2}')
+
+# Check if tests are in the diff
+HAS_TESTS=$(echo "$DIFF" | grep -cE '^\+.*\b(test|spec|__tests__|describe|it\(|#\[test\])' || true)
+```
+
+Pass `$DIFF` and `$LANG` as context to every agent prompt.
+
+## Step 2: Launch reviewers
+
+Spawn agents in a **single message** so they run concurrently. Each agent gets the diff in its prompt — they must NOT fetch it themselves.
+
+**Always spawn:**
+1. **principles-reviewer** (`subagent_type: "principles-reviewer"`) — SRP, readability, simplicity, extensibility
+2. **hygiene-reviewer** (`subagent_type: "hygiene-reviewer"`) — reuse, patterns, idioms, dead code, bloat
+3. **security-reviewer** (`subagent_type: "security-reviewer"`) — PII, secrets, data exposure
+
+**Conditionally spawn:**
+4. **test-reviewer** (`subagent_type: "test-reviewer"`) — only if `$HAS_TESTS > 0` OR the diff adds functionality without any test files
+
+Include in each agent's prompt:
+- The full diff
+- The detected primary language
+- The focus area from `$ARGUMENTS` (if any)
+- Instruction: "Do NOT run git diff yourself. Review the diff provided below."
 
 Focus area: $ARGUMENTS
 
-## Step 2: Synthesize Results
+## Step 3: Synthesize
 
-After all complete, synthesize:
+After all agents return:
 
 ```
 ## Review Summary
 
-### Uncle Bob (SOLID/Clean Code)
-[Key findings]
+### Design (Principles)
+[Key findings on SRP, readability, extensibility]
 
-### Dan North (CUPID)
-[Key findings]
+### Codebase Fit (Hygiene)
+[Key findings on reuse, patterns, idioms, dead code]
 
-### Test Architect (Pyramid/Quality)
-[Key findings on test placement, naming, and quality]
+### Tests
+[Key findings — or "Skipped: no test-relevant changes" if test-reviewer wasn't spawned]
 
-### Security (PII/Secrets)
-[Key findings on sensitive data exposure]
+### Security
+[Key findings on PII/secrets]
 
 ### Conflicts Requiring Decision
-[Any tensions between reviewers—these need user input]
+[Any tensions between reviewers — these need human input]
 
 ### Agreed Improvements
-[Recommendations all reviewers support]
+[Recommendations multiple reviewers support]
 ```
 
-## Step 3: Surface Conflicts
+## Step 4: Surface Conflicts
 
-If reviewers disagree on approach (e.g., "extract this class" vs "keep it unified", or "this is E2E" vs "this is integration"):
-- Clearly state all positions
+If reviewers disagree (e.g., principles says "extract this" but hygiene says "the existing pattern keeps it together"):
+- State all positions
 - Explain the tradeoff
-- Mark as **NEEDS USER DECISION** for the orchestrator to surface
+- Mark as **NEEDS USER DECISION**
 
-Do not resolve design tradeoffs yourself—that's a human judgment call.
+## Step 5: Sweep
 
-## Step 4: Sweep (if not already done)
-
-If any reviewer flags a pattern that could exist elsewhere (e.g., "this anti-pattern likely exists in other modules"), and no `### Sweep:` marker exists in the PR description/comments, invoke `/sweep` with that pattern. This catches systemic issues that code review alone misses.
+If any reviewer flags a pattern that could exist elsewhere, and no sweep has been done, invoke `/sweep` with that pattern.
