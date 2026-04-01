@@ -76,38 +76,32 @@ Each persona should give a **brief, opinionated take** (3-5 bullet points max). 
 
 After all agents return (checklist reviewers + personas):
 
-**Only include concerns — no praise, no "what's working well."** If a section has no findings, omit it entirely.
+**Only concerns — no praise.** Omit empty sections.
 
 ```
 ## Review Summary
 
-### Must Fix
-[Blocking issues from any reviewer — file:line, what's wrong, concrete fix]
+### Concerns
 
-### Should Improve
-[Non-blocking concerns from any reviewer — file:line, suggestion]
+[Each concern with explanation — file:line, what's wrong, why it matters. Include persona perspectives inline where they add signal.]
 
-### Persona Perspectives
-[Only include personas that flagged something. Skip if all clean.]
-**Uncle Bob**: [concern]
-**Metz & Beck**: [concern]
-**Fowler**: [concern]
+1. **[file:line] SRP violation in XxxService** — This class handles both Y and Z. Uncle Bob: "Two reasons to change." Fowler: "Feature envy — method uses FooRepo's data more than its own."
 
-### Conflicts Requiring Decision
-[Tensions between reviewers or personas — state positions, mark NEEDS USER DECISION]
+2. **[file:line] Premature abstraction** — Metz & Beck: "Would duplication be better here? This abstraction serves one caller."
 
-### Follow-Up Issues
-[Out-of-scope work reviewers identified — each item should become a GitHub issue]
-- [ ] [description of work needed] — flagged by [reviewer]
-- [ ] [description of work needed] — flagged by [reviewer]
+3. **[file:line] Dead code left behind** — `oldHelper()` is no longer called after this change.
+
+### Action Items
+
+Every concern maps to exactly one action:
+
+| # | Action | Detail |
+|---|--------|--------|
+| 1 | **Fix** | Extract Z into its own service |
+| 2 | **Decide** | Keep abstraction or inline? [state tradeoff] |
+| 3 | **Fix** | Delete `oldHelper()` |
+| 4 | **New Issue** | Existing XyzService has the same SRP problem — out of scope for this PR |
 ```
-
-## Step 5: Surface Conflicts
-
-If reviewers or personas disagree (e.g., principles says "extract this" but hygiene says "the existing pattern keeps it together", or Sandi says "this abstraction is premature" but Uncle Bob says "this violates OCP"):
-- State all positions
-- Explain the tradeoff
-- Mark as **NEEDS USER DECISION**
 
 ## Step 6: Pattern Scan
 
