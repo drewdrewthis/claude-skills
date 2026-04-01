@@ -1,0 +1,8 @@
+{
+  "name": "quorum",
+  "version": "1.0.0",
+  "description": "Debate a design question with N agents arguing different positions, then synthesize a recommendation.",
+  "author": {
+    "name": "Drew"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "drew-skills",
+  "owner": {
+    "name": "Drew"
+  },
+  "metadata": {
+    "description": "Personal Claude Code skills and plugins",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "quorum",
+      "source": "./plugins/quorum",
+      "description": "Debate a design question with N agents arguing different positions, then synthesize a recommendation.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Drew"
+      }
+    }
+  ]
+}
