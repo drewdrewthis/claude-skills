@@ -1,7 +1,7 @@
 ---
 name: deep-reflect
 description: "Deep audit of Claude session history. Analyzes JSONL logs for mistakes, failed patterns, token waste, and missed opportunities. Writes findings to memory."
-argument-hint: "[7d] [--project my-project]"
+argument-hint: "[7d] [--project myapp]"
 user-invocable: true
 context: fork
 allowed-tools:
@@ -33,7 +33,7 @@ Parse `$ARGUMENTS` for time window and project filter.
 Determine which sessions to include:
 
 1. If `--all` or `--project` is specified, use that filter
-2. If the current working directory is a **shepherd/orchestrator** session (e.g. `~/.config/<project-name>`, or CLAUDE.md says "shepherd"/"orchestrator"), default to `--all` — the shepherd oversees all repos
+2. If the current working directory is an **orchestrator** session (e.g. a meta-repo that manages multiple projects, or CLAUDE.md says "orchestrator"), default to `--all` — the orchestrator oversees all repos
 3. Otherwise, find the Claude project directory for the current working directory by matching `~/.claude/projects/` entries against `$PWD`. Use that exact project directory prefix (not substring grep) to filter sessions. Include worktree subdirectories that share the same repo root.
 
 ## Instructions
@@ -75,9 +75,33 @@ Before starting, create a task for each phase below using TaskCreate. Chain sequ
    "
    ```
 
+### Phase 1.5: Read structured mistake log
+
+If `~/.claude/mistakes.jsonl` exists, read it and filter entries to the same time window. These are **ground truth** corrections — logged in real-time with structured context (category, skill, severity, trigger). Use them as the primary signal for correction analysis. The regex-mined corrections from Phase 1 are supplementary — they catch what wasn't explicitly logged but are noisier.
+
+```bash
+if [ -f ~/.claude/mistakes.jsonl ]; then
+  python3 -c "
+import json, sys
+from datetime import datetime, timedelta, timezone
+cutoff = datetime.now(timezone.utc) - timedelta(days=<DAYS>)
+for line in open('$HOME/.claude/mistakes.jsonl'):
+    entry = json.loads(line.strip())
+    if datetime.fromisoformat(entry['ts'].replace('Z', '+00:00')) >= cutoff:
+        print(json.dumps(entry))
+" > /tmp/deep-reflect-digests/mistakes.jsonl
+fi
+```
+
 ### Phase 2: Analyze digests
 
-Read the combined digest file. This is the core analysis step — do NOT delegate this to a subagent. Use your full reasoning to identify patterns across sessions.
+Read the combined digest file AND the filtered mistake log (if it exists). This is the core analysis step — do NOT delegate this to a subagent. Use your full reasoning to identify patterns across sessions.
+
+When reporting correction metrics, distinguish:
+- **Structured corrections** — from mistakes.jsonl (high confidence, classified)
+- **Regex-detected corrections** — from session digests (lower confidence, unclassified)
+
+Report both counts separately. Over time, as the structured log grows, the regex signal becomes less important.
 
 Look for these categories:
 
@@ -184,3 +208,8 @@ Run TaskList. If any task is not `completed`, go back and finish it now.
 - Check for existing `deep_reflect_*.md` files to avoid duplicating previous findings
 - If previous findings exist, focus on what's NEW or what's gotten WORSE since then
 
+<!-- evolved: 2026-03-31 — added Phase 3.5 (skill evolution), 3.55 (tool scan), 3.6 (action items), 3.7 (rolling log) -->
+<!-- evolved: 2026-04-01 — filter <local-command-stdout> from correction detection; fix contradictory "wait for user" note vs Phase 3.6 -->
+<!-- evolved: 2026-04-01 — add scope detection: shepherd defaults to --all, repo sessions use exact project dir prefix instead of substring grep -->
+<!-- evolved: 2026-04-01 — add skill/agent architecture mismatch as Phase 2 analysis category -->
+<!-- evolved: 2026-04-03 — add Phase 1.5: read structured mistake log as ground truth, separate structured vs regex correction counts -->

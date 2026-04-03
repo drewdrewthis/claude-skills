@@ -23,7 +23,9 @@ Before starting, create a task for each phase below using TaskCreate. Chain sequ
 
 ## Phase 1: Gather Evidence
 
-Scan the **current conversation** (or session digests if invoked from /deep-reflect) for:
+First, check `~/.claude/mistakes.jsonl` for entries matching the target skill name. Filter by `"skill":"<target-skill>"` to find structured friction evidence. These entries are high-confidence — they were logged at correction time with classified context.
+
+Then scan the **current conversation** (or session digests if invoked from /deep-reflect) for:
 
 1. **Corrections** — did the user say "no", "not that", "stop", "wrong"? What did the skill get wrong?
 2. **Course corrections** — did Claude change approach mid-skill? What forced the pivot?
@@ -42,6 +44,9 @@ For each issue found, determine:
 - **Root cause** — is this a skill problem or a one-off situation?
 - **Frequency signal** — has this happened before? (Check memory for prior evolve-skill findings)
 - **Fix type** — add instruction, remove instruction, reword, restructure, or move to references?
+
+Also check for **structural gaps** in the target skill:
+- **Task tracking** — if the skill has 3+ sequential phases/steps and no TaskCreate usage, add a "Track Progress" step. Multi-step skills benefit from task visibility.
 
 Only proceed with changes that are:
 - **Generalizable** — applies to future invocations, not just this one
@@ -93,3 +98,6 @@ This creates a visible history of how the skill has improved over time without a
 - **Bloating** — every evolution adds lines, nothing gets removed. Actively trim.
 - **Breaking what works** — restructuring a skill that's mostly fine. Patch, don't rewrite.
 - **Evolving without evidence** — speculative improvements belong in a rewrite, not an evolution.
+
+<!-- evolved: 2026-04-03 — add structural gap check for TaskCreate in target skills with 3+ phases -->
+<!-- evolved: 2026-04-03 — read mistakes.jsonl filtered by skill name as primary friction evidence -->

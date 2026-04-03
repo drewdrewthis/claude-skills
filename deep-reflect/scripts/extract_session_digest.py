@@ -4,9 +4,25 @@ Pulls out: user requests, corrections, errors, tool failures, redirections,
 token-heavy operations, and key decisions. Outputs a condensed text summary.
 """
 import json
+import re
 import sys
 import os
 from collections import Counter
+
+
+def redact_secrets(text):
+    """Redact common credential patterns from text."""
+    # Slack tokens
+    text = re.sub(r'xoxb-[A-Za-z0-9\-]+', 'xoxb-[REDACTED]', text)
+    text = re.sub(r'xoxp-[A-Za-z0-9\-]+', 'xoxp-[REDACTED]', text)
+    # GitHub tokens
+    text = re.sub(r'ghp_[A-Za-z0-9]+', 'ghp_[REDACTED]', text)
+    text = re.sub(r'gho_[A-Za-z0-9]+', 'gho_[REDACTED]', text)
+    # Generic API keys (sk-..., key-...)
+    text = re.sub(r'\b(sk-[A-Za-z0-9]{20,})', '[REDACTED-API-KEY]', text)
+    # Telegram bot tokens (numeric:alphanumeric)
+    text = re.sub(r'\b\d{8,}:[A-Za-z0-9_\-]{30,}\b', '[REDACTED-BOT-TOKEN]', text)
+    return text
 
 
 def extract_text(content):
@@ -185,8 +201,9 @@ def process_session(filepath):
                     # Skip noise sources from correction/frustration detection
                     is_task_notification = "<task-notification>" in clean
                     is_command_output = "<local-command-stdout>" in clean
+                    is_watch_notification = "[watch]" in clean.lower()
 
-                    is_noise = is_task_notification or is_command_output
+                    is_noise = is_task_notification or is_command_output or is_watch_notification
 
                     user_messages.append(
                         {
@@ -258,7 +275,7 @@ def process_session(filepath):
                        f"max={max(lengths)}, total={sum(lengths)}")
 
     digest.append("")
-    return "\n".join(digest)
+    return redact_secrets("\n".join(digest))
 
 
 if __name__ == "__main__":
