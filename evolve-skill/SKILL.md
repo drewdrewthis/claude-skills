@@ -84,13 +84,13 @@ Run TaskList. If any task is not `completed`, go back and finish it now.
 
 ## Evolution Log
 
-After patching, append a one-line entry to the bottom of the SKILL.md:
+After patching, append a one-line entry to `EVOLUTION.md` in the target skill's directory (create if missing):
 
 ```markdown
-<!-- evolved: YYYY-MM-DD — [brief description of change] -->
+- YYYY-MM-DD — [brief description of change]
 ```
 
-This creates a visible history of how the skill has improved over time without adding to the token cost (HTML comments are low-weight context).
+Keep the log in the skill's directory but out of SKILL.md itself. The skill definition should contain only instructions, not meta-tracking history.
 
 ## Anti-patterns
 
@@ -98,6 +98,3 @@ This creates a visible history of how the skill has improved over time without a
 - **Bloating** — every evolution adds lines, nothing gets removed. Actively trim.
 - **Breaking what works** — restructuring a skill that's mostly fine. Patch, don't rewrite.
 - **Evolving without evidence** — speculative improvements belong in a rewrite, not an evolution.
-
-<!-- evolved: 2026-04-03 — add structural gap check for TaskCreate in target skills with 3+ phases -->
-<!-- evolved: 2026-04-03 — read mistakes.jsonl filtered by skill name as primary friction evidence -->
